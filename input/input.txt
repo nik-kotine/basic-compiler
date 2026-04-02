@@ -1,2 +1,6 @@
-y ** 2 + 3;
-x * 2 + y / 3;
+y ** SIN(2 + 3.5);
+/*
+This comment should * be ignored
+until I hit this symbol:
+*/
+COS(my_var + PI) / LOG(E);

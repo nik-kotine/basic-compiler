@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string_view>
 using namespace std;
 
 enum Type {
@@ -11,6 +12,10 @@ enum Type {
 	MULTI,
 	DIV,
 	POWER,
+	LEFT_PTHS,
+	RIGHT_PTHS,
+	CONSTANT,
+	FUNCTION,
 	SEMICOLON,
 	FILE_END
 };
@@ -18,6 +23,7 @@ enum Type {
 class Token {
 	Type _type = Type::DEFAULT;
 	string _lex;
+	string _res = "";
 
 public:
 	
@@ -26,31 +32,50 @@ public:
 
 	Type get_type() { return _type; }
 
-	void print() {
+	void set_print_type() {
+		_res = "TOKEN(";
 		switch (_type) {
 			case DEFAULT:
-				cout << "unknown: "; break;
+				_res += "DEFAULT"; break;
 			case NUMBER:
-				cout << "number: "; break;
+				_res += "NUMBER"; break;
 			case FLOATING:
-				cout << "float: "; break;
+				_res += "FLOAT"; break;
 			case IDENTIFIER:
-				cout << "identifier: "; break;
+				_res += "IDENTIFIER"; break;
 			case SUM:
-				cout << "sum operator: "; break;
+				_res += "SUM"; break;
 			case SUB:
-				cout << "sub operator: "; break;
+				_res += "SUB"; break;
 			case MULTI:
-				cout << "multi operator: "; break;
+				_res += "MULTI"; break;
 			case DIV:
-				cout << "div operator: "; break;
+				_res += "DIV"; break;
 			case POWER:
-				cout << "power operator: "; break;
+				_res += "POWER"; break;
 			case SEMICOLON:
-				cout << "semicolon: "; break;
+				_res += "SEMICOLON"; break;
+			case LEFT_PTHS:
+				_res += "LEFT_PTHS"; break;
+			case RIGHT_PTHS:
+				_res += "RIGHT_PTHS"; break;
+			case CONSTANT:
+				_res += "CONSTANT"; break;
+			case FUNCTION:
+				_res += "FUNCTION"; break;
 			case FILE_END:
-				cout << "eof\n"; return;
+				_res += "FILE_END"; break;
 		}
-		cout << _lex << '\n';
+		_res += ", \"" + _lex + "\")\n";
+	}
+
+	void print() {
+		if (_res == "") { set_print_type(); }
+		cout << _res;
+	}
+
+	string_view get_string() {
+		if (_res == "") { set_print_type(); }
+		return _res;
 	}
 };
